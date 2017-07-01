@@ -3,6 +3,7 @@ package com.github.vp.example.axon;
 
 import com.github.vp.example.axon.domain.command.RegisterCargoCommand;
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.distributed.DistributedCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.junit.Ignore;
@@ -20,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by vimalpar on 01/07/17.
  */
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class ApplicationTest {
@@ -34,6 +34,7 @@ public class ApplicationTest {
     public void shouldLoadContext() {
         assertThat(applicationContext.getBean(EventBus.class)).isNotNull();
         assertThat(applicationContext.getBean(CommandBus.class)).isNotNull();
+        assertThat(applicationContext.getBean(DistributedCommandBus.class)).isNotNull();
     }
 
     @Test
