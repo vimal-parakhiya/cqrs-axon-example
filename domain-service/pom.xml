@@ -17,5 +17,11 @@
       <groupId>com.github.vp.example.axon</groupId>
       <artifactId>domain-service-starter</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.vp.example.axon</groupId>
+      <artifactId>domain-service-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

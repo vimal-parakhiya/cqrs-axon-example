@@ -9,8 +9,9 @@
   <modules>
     <module>domain-service-dependencies</module>
     <module>domain-service-bom</module>
-    <module>domain-service-starter</module>
     <module>domain-service-autoconfigure</module>
+    <module>domain-service-starter</module>
+    <module>domain-service-starter-test</module>
     <module>domain-service</module>
   </modules>
 </project>
