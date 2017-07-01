@@ -1,6 +1,8 @@
 package com.github.vp.example.axon;
 
 
+import com.github.vp.example.axon.domain.command.DeliverCargoCommand;
+import com.github.vp.example.axon.domain.command.DispatchCargoCommand;
 import com.github.vp.example.axon.domain.command.RegisterCargoCommand;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.distributed.DistributedCommandBus;
@@ -38,7 +40,36 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldCreateCargoAggregate() {
-        commandGateway.sendAndWait(new RegisterCargoCommand(trackingId(), itinerary()));
+    public void shouldCreateAndDeliverCargo() throws InterruptedException {
+        String trackingId = trackingId();
+        commandGateway.sendAndWait(new RegisterCargoCommand(trackingId, itinerary()));
+        commandGateway.sendAndWait(new DispatchCargoCommand(trackingId));
+        commandGateway.sendAndWait(new DeliverCargoCommand(trackingId));
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotDeliverCargoIfNotDispatched() throws InterruptedException {
+        String trackingId = trackingId();
+        commandGateway.sendAndWait(new RegisterCargoCommand(trackingId, itinerary()));
+        commandGateway.sendAndWait(new DeliverCargoCommand(trackingId));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotDeliverSameCargoMultipleTimes() throws InterruptedException {
+        String trackingId = trackingId();
+        commandGateway.sendAndWait(new RegisterCargoCommand(trackingId, itinerary()));
+        commandGateway.sendAndWait(new DispatchCargoCommand(trackingId));
+        commandGateway.sendAndWait(new DeliverCargoCommand(trackingId));
+        commandGateway.sendAndWait(new DeliverCargoCommand(trackingId));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotDispatchAlreadyDeliveredCargo() throws InterruptedException {
+        String trackingId = trackingId();
+        commandGateway.sendAndWait(new RegisterCargoCommand(trackingId, itinerary()));
+        commandGateway.sendAndWait(new DeliverCargoCommand(trackingId));
+        commandGateway.sendAndWait(new DeliverCargoCommand(trackingId));
+        commandGateway.sendAndWait(new DispatchCargoCommand(trackingId));
     }
 }

@@ -12,6 +12,7 @@ import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.util.Assert;
 
 import static com.github.vp.example.axon.domain.vo.CargoStatus.*;
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
@@ -26,6 +27,9 @@ public class Cargo {
     private Itinerary itinerary;
     private CargoStatus cargoStatus;
 
+    private Cargo() {
+    }
+
     @CommandHandler
     public Cargo(RegisterCargoCommand registerCargoCommand) {
         apply(new CargoRegisteredEvent(registerCargoCommand.getTrackingId(), registerCargoCommand.getItinerary()));
@@ -33,10 +37,13 @@ public class Cargo {
 
     @CommandHandler
     public void dispatch(DispatchCargoCommand command) {
+        Assert.isTrue(cargoStatus == REGISTERED, String.format("Unable to dispatch cargo %s due to invalid status %s", trackingId, cargoStatus) );
         apply(new CargoDispatchedEvent(command.getTrackingId()));
     }
 
+    @CommandHandler
     public void deliver(DeliverCargoCommand command) {
+        Assert.isTrue(cargoStatus == DISPATCHED, String.format("Unable to dispatch cargo %s due to invalid status %s", trackingId, cargoStatus));
         apply(new CargoDeliveredEvent(command.getTrackingId()));
     }
 
