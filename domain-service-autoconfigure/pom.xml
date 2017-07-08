@@ -50,6 +50,13 @@
       <groupId>com.lmax</groupId>
       <artifactId>disruptor</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.jgroups</groupId>
+      <artifactId>jgroups</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.axonframework</groupId>
+      <artifactId>axon-distributed-commandbus-jgroups</artifactId>
+    </dependency>
   </dependencies>
 </project>

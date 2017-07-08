@@ -5,7 +5,6 @@ import com.github.vp.example.axon.domain.vo.Itinerary;
 
 import java.util.UUID;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 

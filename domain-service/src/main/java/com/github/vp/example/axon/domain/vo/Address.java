@@ -1,7 +1,6 @@
 package com.github.vp.example.axon.domain.vo;
 
 import java.io.Serializable;
-import java.io.StreamCorruptedException;
 
 /**
  * Created by vimalpar on 01/07/17.

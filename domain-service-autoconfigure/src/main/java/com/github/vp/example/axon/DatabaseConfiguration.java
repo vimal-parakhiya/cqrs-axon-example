@@ -1,6 +1,5 @@
 package com.github.vp.example.axon;
 
-import com.github.vp.example.axon.DataSourceFactory;
 import liquibase.integration.spring.SpringLiquibase;
 import org.axonframework.common.jdbc.ConnectionProvider;
 import org.axonframework.common.jdbc.PersistenceExceptionResolver;
