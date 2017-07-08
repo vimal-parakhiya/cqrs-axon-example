@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.vp.example.axon.DomainServiceConfiguration
+com.github.vp.example.axon.CommandBusConfiguration,\
+com.github.vp.example.axon.DatabaseConfiguration

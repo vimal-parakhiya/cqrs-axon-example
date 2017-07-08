@@ -14,7 +14,9 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.util.Assert;
 
-import static com.github.vp.example.axon.domain.vo.CargoStatus.*;
+import static com.github.vp.example.axon.domain.vo.CargoStatus.DELIVERED;
+import static com.github.vp.example.axon.domain.vo.CargoStatus.DISPATCHED;
+import static com.github.vp.example.axon.domain.vo.CargoStatus.REGISTERED;
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 /**

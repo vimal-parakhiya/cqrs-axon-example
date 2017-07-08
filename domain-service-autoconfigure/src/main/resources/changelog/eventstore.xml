@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="eventstore-domain-event-entry-1" author="vimal-parakhiya">
+        <createTable tableName="domain_event_entry">
+            <column name="aggregate_identifier" type="varchar2(255)"/>
+            <column name="sequence_number" type="bigint"/>
+            <column name="type" type="varchar2(255)"/>
+            <column name="payload" type="varchar2(4000)"/>
+            <column name="payload_type" type="varchar2(255)"/>
+            <column name="payload_revision" type="varchar2(255)"/>
+            <column name="meta_data" type="varchar2(4000)"/>
+            <column name="event_identifier" type="varchar2(255)"/>
+            <column name="time_stamp" type="varchar2(255)"/>
+            <column name="global_index" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            drop table domain_event_entry
+        </rollback>
+    </changeSet>
+
+    <changeSet id="eventstore-domain-event-entry-2" author="vimal-parakhiya">
+        <addUniqueConstraint tableName="domain_event_entry" columnNames="aggregate_identifier, sequence_number, type" />
+    </changeSet>
+
+    <changeSet id="eventstore-snapshot-event-entry-2" author="vimal-parakhiya">
+        <createTable tableName="snapshot_event_entry">
+            <column name="aggregate_identifier" type="varchar2(255)"/>
+            <column name="sequence_number" type="bigint"/>
+            <column name="type" type="varchar2(255)"/>
+            <column name="payload" type="blob"/>
+            <column name="payload_type" type="varchar2(255)"/>
+            <column name="payload_revision" type="varchar2(255)"/>
+            <column name="meta_data" type="blob"/>
+            <column name="event_identifier" type="varchar2(255)"/>
+            <column name="time_stamp" type="varchar2(255)"/>
+        </createTable>
+        <addPrimaryKey tableName="snapshot_event_entry" columnNames="aggregate_identifier, sequence_number, type"/>
+        <rollback>
+            drop table snapshopt_event_entry
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
