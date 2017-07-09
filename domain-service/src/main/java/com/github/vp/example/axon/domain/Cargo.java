@@ -24,7 +24,6 @@ import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 public class Cargo {
     @AggregateIdentifier
     private String trackingId;
-    private Itinerary itinerary;
     private CargoStatus cargoStatus;
 
     private Cargo() {
@@ -41,16 +40,14 @@ public class Cargo {
         apply(new CargoDispatchedEvent(command.getTrackingId()));
     }
 
-    @CommandHandler
-    public void deliver(DeliverCargoCommand command) {
+    public void deliver() {
         Assert.isTrue(cargoStatus == DISPATCHED, String.format("Unable to dispatch cargo %s due to invalid status %s", trackingId, cargoStatus));
-        apply(new CargoDeliveredEvent(command.getTrackingId()));
+        apply(new CargoDeliveredEvent(trackingId));
     }
 
     @EventSourcingHandler
     public void on(CargoRegisteredEvent event) {
         trackingId = event.getTrackingId();
-        itinerary = event.getItinerary();
         cargoStatus = REGISTERED;
     }
 
